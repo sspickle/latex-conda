@@ -3,5 +3,5 @@
     "extensions": [
         "james-yu.latex-workshop"
     ],
-    "image": "latex:latest"
+    "image": "ghcr.io/202510-phys-415/latex-python:1
 } 
