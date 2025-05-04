@@ -3,5 +3,7 @@
     "extensions": [
         "james-yu.latex-workshop"
     ],
-    "image": "ghcr.io/202510-phys-415/latex-python:1
+    //"image": "ghcr.io/202510-phys-415/latex-python:1",
+    "image":"latex-python:latest",
+    "remoteUser":"vscode"
 } 

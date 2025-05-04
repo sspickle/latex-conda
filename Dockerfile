@@ -1,4 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/base:bookworm
+#
+# docker buildx build --push --platform linux/arm64,linux/amd64 --tag ghcr.io/202510-phys-415/latex-python:1 .
+#
 
 # non interactive frontend for locales
 ENV DEBIAN_FRONTEND=noninteractive
@@ -49,11 +52,9 @@ RUN arch=$(uname -m) && \
     bash miniconda.sh -b -p /home/vscode/miniconda3 && \
     rm -f miniconda.sh
 
-RUN chown -R vscode:vscode /home/vscode
-
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-USER vscode
+#USER vscode
 
 RUN conda install -y -n base ipykernel --update-deps --force-reinstall
 
@@ -65,10 +66,12 @@ RUN conda run -n phenv pip install quarto quarto-cli
     
 COPY . /app
 
-RUN echo "source activate phenv\nexport QUARTO_PYTHON=/home/vscode/miniconda3/envs/phenv/bin/python" >> ~/.bashrc
+RUN echo "source activate phenv\nexport QUARTO_PYTHON=/home/vscode/miniconda3/envs/phenv/bin/python" >> /home/vscode/.bashrc
 
-RUN echo "export PATH=/home/vscode/miniconda3/bin:$PATH >> ~/.bashrc"
+RUN echo "export PATH=/home/vscode/miniconda3/bin:$PATH >> /home/vscode/.bashrc"
 
-RUN . ~/.bashrc
+RUN . /home/vscode/.bashrc
+
+RUN chown -R vscode:vscode /home/vscode
 
 EXPOSE 8080
